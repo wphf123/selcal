@@ -1,4 +1,7 @@
 import json
+import sounddevice
+import numpy as np
+import time
 
 with open('frequencies.json', 'r') as file:
     separated_freqs = json.load(file)
@@ -70,10 +73,46 @@ def check_valid(code: str) -> None:
         else:
             print(f'code {code} is an invalid SELCAL code')
 
+def normalize(a):
+    """Normalizes an array so that all values are between 0 and 1.
+    Needs to be done to the combined waveforms to prevent distortions"""
+    return (a - np.min(a)) / (np.max(a) - np.min(a))
+
+def tone(freq1: float, freq2: float) -> None:
+    rate = 44100
+    length = 1
+    t = np.linspace(0, length, length * rate)
+    waveform1 = np.sin(2 * np.pi * freq1 * t)
+    waveform2 = np.sin(2 * np.pi * freq2 * t)
+    combined_waveform = normalize(waveform1 + waveform2)
+    sounddevice.play(combined_waveform, rate)
+    sounddevice.wait()
+
+def play_code(code: str) -> None:
+    if len(code) == 5:
+        code = code[:2] + code[3:]
+    try:
+        tone(freqs[code[0]], freqs[code[1]])
+        time.sleep(0.2)
+        tone(freqs[code[2]], freqs[code[3]])
+    except KeyError:
+        pass
+
 if __name__ == '__main__':
     # check_valid('AC-BD')
     # check_valid('CA-BD')
     # check_valid('AABD')
     # check_valid('C9-BD')
-    import doctest
-    doctest.testmod()
+    # import doctest
+    # doctest.testmod()
+    print('Enter codes below (type q or Ctrl-C to quit)')
+    while True:
+        try:
+            code = input('> ')
+        except KeyboardInterrupt:
+            break
+        if code == 'q':
+            break
+        code = code.upper()
+        check_valid(code)
+        play_code(code)
