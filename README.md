@@ -1,7 +1,7 @@
 # SELCAL
 
 ## Basic overview
-Aircraft traveling in remote areas such as oceans communicate with air traffic control (ATC) using high frequency (HF) radio, rather than the very high frequency radios used for communication in more trafficked areas.  This is because HF radio has a longer range, but comes with the drawback that there is typically more noise.  Aircrews using HF for communication traditionally needed to listed to this noisy frequency continuously, in case controllers contacted them.
+Aircraft traveling over remote areas such as oceans often communicate with air traffic control (ATC) using high frequency (HF) radio, rather than the very high frequency (VHF) radios used for communication in more trafficked areas.  This is because HF radio has a longer range, but comes with the drawback that there is typically more noise.  Aircrews using HF for communication traditionally needed to listed to this noisy frequency continuously, in case controllers contacted them.
 
 SELCAL is a system by which each aircraft is assigned a four character alphanumeric code.  When a controller wishes to speak with the aircrew, they transmit the aircraft's code encoded as a sound.  The aircraft's HF radio is turned on and listening, but with the volume turned down so the pilots don't need to listen.  When the aircraft's radio hears its code, it alerts the pilots to turn up the volume and call the controller back.
 
